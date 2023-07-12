@@ -1,5 +1,6 @@
- import styles from "./CityItem.module.css"
+import styles from "./CityItem.module.css"
 import {Link} from "react-router-dom";
+import {useCities} from "../../Context/CitiesContext.jsx";
 
 const formatDate = (date) =>
     new Intl.DateTimeFormat("en", {
@@ -8,11 +9,18 @@ const formatDate = (date) =>
         year: "numeric",
         weekday: "long",
     }).format(new Date(date));
-const CityItem = ({cityItem, onRemoveCity}) => {
-    const {emoji, cityName, date, id, position} = cityItem
+const CityItem = ({cityItem}) => {
+    const {currentCity, deleteCity} = useCities()
+    const {emoji, cityName, date, id, position} = cityItem;
+
+    function handleRemoveCity (e){
+        e.preventDefault();
+        deleteCity(id)
+    }
     return (
         <li>
-            <Link className={styles.cityItem} to={`${id}?lat=${position.lat}&lng=${position.lng}`}>
+            <Link className={`${styles.cityItem} ${id === currentCity.id ? styles["cityItem--active"] : ""}`}
+                  to={`${id}?lat=${position.lat}&lng=${position.lng}`}>
             <span className={styles.emoji}>
             {emoji}
             </span>
@@ -20,7 +28,7 @@ const CityItem = ({cityItem, onRemoveCity}) => {
                 <time className={styles.date}>
                     {(formatDate(date))}
                 </time>
-                <button className={styles.deleteBtn} onClick={() => onRemoveCity(id)}>&times;</button>
+                <button className={styles.deleteBtn} onClick={handleRemoveCity}>&times;</button>
             </Link>
         </li>
     )
