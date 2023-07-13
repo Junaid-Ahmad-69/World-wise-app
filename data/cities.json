@@ -1,3 +1,16 @@
 {
-  "cities": []
+  "cities": [
+    {
+      "cityName": "Shorkot",
+      "country": "Pakistan",
+      "emoji": "🇵🇰",
+      "date": "2023-07-13T07:18:28.465Z",
+      "notes": "",
+      "position": {
+        "lat": "30.833266687753582",
+        "lng": "72.07614898681642"
+      },
+      "id": 1
+    }
+  ]
 }
